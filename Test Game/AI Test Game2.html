@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI vs Real Image Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            margin-top: 20px;
+        }
+        p {
+            margin-top: 10px;
+            font-size: 1.2em;
+        }
+        .images {
+            display: flex;
+            justify-content: space-around;
+            width: 80%;
+            margin: 20px 0;
+        }
+        .images img {
+            width: 45%;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        .images img:hover {
+            border: 2px solid #555;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+        .button-container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>AI vs Real Image Game</h1>
+    <p>Try to choose the real image.</p>
+    <div class="images">
+        <img id="image1" src="" alt="Image 1" onclick="checkImage('left')">
+        <img id="image2" src="" alt="Image 2" onclick="checkImage('right')">
+    </div>
+    <div class="result" id="result"></div>
+    <div class="button-container" id="next-button" style="display: none;">
+        <button onclick="nextTest()">Next</button>
+    </div>
+    <script>
+        const images = [
+            {src: 'real_image1.jpg', type: 'real'},
+            {src: 'ai_image1.jpg', type: 'ai'},
+            {src: 'real_image2.jpg', type: 'real'},
+            {src: 'ai_image2.jpg', type: 'ai'},
+            {src: 'real_image3.jpg', type: 'real'},
+            {src: 'ai_image3.jpg', type: 'ai'},
+            {src: 'real_image4.jpg', type: 'real'},
+            {src: 'ai_image4.jpg', type: 'ai'},

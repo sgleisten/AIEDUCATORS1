@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI vs Real Image Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            margin-top: 20px;
+        }
+        .images {
+            display: flex;
+            justify-content: space-around;
+            width: 80%;
+            margin: 20px 0;
+        }
+        .images img {
+            width: 45%;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        .images img:hover {
+            border: 2px solid #555;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+        .button-container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>AI vs Real Image Game</h1>
+    <div class="images">
+        <img id="image1" src="AIbaldman.jpeg" alt="AI Image" onclick="checkImage('left')">
+        <img id="image2" src="Rguywithnecklace.jpeg" alt="Real Image" onclick="checkImage('right')">
+    </div>
+    <div class="result" id="result"></div>
+    <div class="button-container">
+        <button onclick="nextTest()">Next</button>
+    </div>
+    <script>
+        const images = [
+            {src: 'real_image1.jpg', type: 'real'},
+            {src: 'ai_image1.jpg', type: 'ai'},
+            {src: 'real_image2.jpg', type: 'real'},
+            {src: 'ai_image2.jpg', type: 'ai'},
+            {src: 'real_image3.jpg', type: 'real'},
+            {src: 'ai_image3.jpg', type: 'ai'},
+            {src: 'real_image4.jpg', type: 'real'},
+            {src: 'ai_image4.jpg', type: 'ai'},
+            {src: 'real_image5.jpg', type: 'real'},
+            {src: 'ai_image5.jpg', type: 'ai'}
+        ];
+
+        let currentTest = 0;
+        let score = 0;
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function nextTest() {
+            if (currentTest >= 5) {
+                document.getElementById('result').textContent = `Test completed! Your score: ${score} out of 5.`;
+                document.querySelector('.button-container').style.display = 'none';
+                return;
+            }
+
+            shuffle(images);
+            const realImage = images.find(img => img.type === 'real');
+            const aiImage = images.find(img => img.type === 'ai');
+
+            document.getElementById('image1').src = realImage.src;
+            document.getElementById('

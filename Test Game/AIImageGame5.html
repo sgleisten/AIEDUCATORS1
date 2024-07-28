@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI vs Real Image Game</title>
+    <style>
+        body {
+            font-family: Poppins, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .logo {
+            margin-top: -100px;
+        }
+        h1 {
+            margin-top: -100px;
+        }
+        p {
+            margin-top: -10px;
+            font-size: 1.5em;
+        }
+        .images {
+            display: flex;
+            justify-content: space-around;
+            width: 60%;
+            margin: 10px 0;
+        }
+        .images img {
+            width: 45%;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        .images img:hover {
+            border: 2px solid #555;
+        }
+        .result {
+            margin-top: 0px;
+            font-size: 1.5em;
+        }
+        .button-container {
+            margin-top: 5px;
+            font-size: 2em;
+        }
+        .next-button {
+            font-size: 1.2em; 
+            padding: 10px 10px; 
+            width: 150px;
+        }
+    </style>
+</head>
+<body>
+    <img src="your-logo.png" alt="Logo" class="logo">
+    <h1>AI vs Real Image Game</h1>
+    <p>Try to choose the real image.</p>
+    <div class="images">
+        <img id="image1" src="" alt="Image 1" onclick="checkImage('left')">
+        <img id="image2" src="" alt="Image 2" onclick="checkImage('right')">
+    </div>
+    <div class="result" id="result"></div>
+    <div class="button-container" id="next-button" style="display: none;">
+        <button class="next-button" onclick="nextTest()">Next</button>
+    </div>
+    <script>
+        const images = [
+            {src: 'real_image1.jpg', type: 'real'},
+            {src: 'ai_image1.jpg', type: 'ai'},
+            {src: 'real_image2.jpg', type: 'real'},
+            {src: 'ai_image2.jpg', type: 'ai'},
+            {src: 'real_image3.jpg', type: 'real'},
+            {src: 'ai_image3.jpg', type: 'ai'},
+            {src: 'real_image4.jpg', type: 'real'},
+            {src: 'ai_image4.jpg', type: 'ai'},
+            {src: 'real_image5.jpg', type: 'real'},
+            {src: 'ai_image5.jpg', type: 'ai'}
+        ];
+
+        let currentTest = 0;
+        let score = 0;
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function nextTest() {
+            if (currentTest >= 5) {
+                document.getElementById('result').textContent = `Test completed! Your score: ${score} out of 5.`;
+                document.querySelector('.button-container').style.display = 'none';
+                return;
+            }
+
+            shuffle(images);
+            const realImage = images.find(img => img.type === 'real' && !img.used);
+            const aiImage = images.find(img => img.type === 'ai' && !img.used);
+
+            if (realImage && aiImage) {
+    const isRealOnLeft = Math.random() < 0.5;
+
+    if (isRealOnLeft) {
+        document.getElementById('image1').src = realImage.src;
+        document.getElementById('image2').src = aiImage.src;
+        document.getElementById('image1').dataset.type = realImage.type;
+        document.getElementById('image2').dataset.type = aiImage.type;
+    } else {
+        document.getElementById('image1').src = aiImage.src;
+        document.getElementById('image2').src = realImage.src;
+        document.getElementById('image1').dataset.type = aiImage.type;
+        document.getElementById('image2').dataset.type = realImage.type;
+    }
+
+    realImage.used = true;
+    aiImage.used = true;
+
+    document.getElementById('result').textContent = '';
+    document.getElementById('next-button').style.display = 'none';
+    currentTest++;
+}
+
+        }
+
+        function checkImage(selected) {
+            const result = document.getElementById('result');
+            const selectedImage = document.getElementById(`image${selected === 'left' ? '1' : '2'}`);
+            
+            if (selectedImage.dataset.type === 'real') {
+                result.textContent = 'Correct! This is the real image.';
+                score++;
+            } else {
+                result.textContent = 'Wrong! This image was created by AI.';
+            }
+
+            document.getElementById('next-button').style.display = 'block';
+        }
+
+        window.onload = nextTest;
+    </script>
+</body>
+</html>
